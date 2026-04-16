@@ -15,4 +15,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     })->name('admin.index');
 });
 
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/sach/theloai/{id}', [HomeController::class, 'theLoai']);
+Route::get('/timkiem', [HomeController::class, 'search']);
 require __DIR__.'/auth.php';
