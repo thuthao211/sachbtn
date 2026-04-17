@@ -16,3 +16,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+use App\Http\Controllers\DashboardController;
+
+Route::get('/admin/index', [App\Http\Controllers\DashboardController::class, 'index'])
+    ->name('admin.dashboard')
+    ->middleware(['web', 'auth']); 
+use App\Http\Controllers\DanhGiaController;
+
+Route::get('/admin/danhgia', [DanhGiaController::class, 'index'])->name('admin.danhgia.index');
+Route::get('/admin/danhgia/{id}/duyet', [DanhGiaController::class, 'duyet'])->name('admin.danhgia.duyet');
+Route::get('/admin/danhgia/{id}/tu-choi', [DanhGiaController::class, 'tuchoi'])->name('admin.danhgia.tuchoi');
+Route::get('/admin/danhgia/{id}/xoa', [DanhGiaController::class, 'xoa'])->name('admin.danhgia.xoa');
