@@ -19,7 +19,17 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::prefix('tai-khoan')->name('account.')->group(function () {
+    Route::prefix('user/taikhoan')->name('account.')->group(function () {
+        Route::get('/', [AccountController::class, 'index'])->name('profile');
+        Route::post('/cap-nhat-thong-tin', [AccountController::class, 'updateProfile'])->name('update');
+        Route::post('/doi-mat-khau', [AccountController::class, 'updatePassword'])->name('password');
+        Route::get('/don-hang', [AccountController::class, 'orders'])->name('orders');
+        Route::get('/don-hang/{id}', [AccountController::class, 'orderDetail'])->name('order_detail');
+    });
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('admin/taikhoan')->name('account.')->group(function () {
         Route::get('/', [AccountController::class, 'index'])->name('profile');
         Route::post('/cap-nhat-thong-tin', [AccountController::class, 'updateProfile'])->name('update');
         Route::post('/doi-mat-khau', [AccountController::class, 'updatePassword'])->name('password');
@@ -49,7 +59,7 @@ Route::prefix('admin')->group(function () {
 use App\Http\Controllers\DashboardController;
 
 Route::get('/admin/index', [App\Http\Controllers\DashboardController::class, 'index'])
-    ->name('admin.dashboard')
+    ->name('admin.index')
     ->middleware(['web', 'auth']); 
 use App\Http\Controllers\DanhGiaController;
 

@@ -129,7 +129,7 @@
                                 @foreach($topSach as $index => $sach)
                                 <tr>
                                     <td><span class="badge-top">{{ $index + 1 }}</span></td>
-                                    <td><img src="{{ asset('image/' . $sach->anh_bia) }}" class="book-img" alt="{{ $sach->ten_sach }}"></td>
+                                    <td><img src="{{ asset('storage/image/' . $sach->anh_bia) }}" class="book-img" alt="{{ $sach->ten_sach }}"></td>
                                     <td>
                                         <span class="book-name">{{ $sach->ten_sach }}</span>
                                         <span class="book-price">{{ number_format($sach->gia_ban) }}đ</span>
