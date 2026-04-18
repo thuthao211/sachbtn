@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class DonHang extends Model
@@ -14,4 +14,7 @@ class DonHang extends Model
 
     // Báo Laravel bảng có cột created_at (thời gian tạo)
     public $timestamps = true; 
+    use HasFactory;
+    protected $table = 'don_hang';
+    protected $guarded = [];
 }
