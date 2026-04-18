@@ -34,7 +34,7 @@ class UserController extends Controller
         // 5. Lấy danh sách: Sắp xếp mới nhất và phân trang
         $users = $query->latest()->paginate(10)->appends($request->all());
 
-        return view('admin.user.index', compact('users'));
+        return view('admin.quan-ly-nguoi-dung', compact('users'));
     }
 
     public function destroy($id)

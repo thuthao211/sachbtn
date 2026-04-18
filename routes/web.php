@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DonHangController;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -18,17 +20,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
 require __DIR__.'/auth.php';
 
 
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\DonHangController;
 
 Route::prefix('admin')->group(function () {
     
-    // Quản lý User
-    Route::get('user', [UserController::class, 'index'])->name('sys.user.index');
-    Route::delete('user/{id}', [UserController::class, 'destroy'])->name('sys.user.revoke');
+    // Quản lý User: http://127.0.0.1:8000/admin/user
+    Route::get('/user', [UserController::class, 'index'])->name('sys.user.index');
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('sys.user.revoke');
 
-    // Quản lý Đơn hàng
-    Route::get('donhang', [DonHangController::class, 'index'])->name('sys.order.index');
-    Route::put('donhang/{id}', [DonHangController::class, 'update'])->name('sys.order.update');
-    
+    // Quản lý Đơn hàng: http://127.0.0.1:8000/admin/donhang
+    Route::get('/donhang', [DonHangController::class, 'index'])->name('admin.donhang.index');
+    Route::post('/donhang/update/{id}', [DonHangController::class, 'update'])->name('admin.donhang.update');
 });
