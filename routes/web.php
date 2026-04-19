@@ -86,7 +86,7 @@ Route::prefix('admin')->group(function () {
     // Quản lý Đơn hàng: http://127.0.0.1:8000/admin/donhang
     Route::get('/donhang', [DonHangController::class, 'index'])->name('admin.donhang.index');
     Route::post('/donhang/update/{id}', [DonHangController::class, 'update'])->name('admin.donhang.update');
-});
+
 use App\Http\Controllers\DashboardController;
 
 Route::get('/admin/index', [App\Http\Controllers\DashboardController::class, 'index'])
