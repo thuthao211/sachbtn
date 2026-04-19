@@ -37,11 +37,26 @@ class DonHangController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $dh = \App\Models\DonHang::findOrFail($id);
-        $dh->trang_thai = $request->trang_thai;
-        $dh->save();
-        
-        return back()->with('thongbao', 'Đã cập nhật trạng thái đơn hàng!');
+{
+    $order = \App\Models\DonHang::findOrFail($id);
+
+    // Nếu chuyển sang "đã giao"
+    if ($request->trang_thai == 'da_giao' && $order->trang_thai != 'da_giao') {
+
+        $details = \App\Models\ChiTietDonHang::where('don_hang_id', $id)->get();
+
+        foreach ($details as $item) {
+            \DB::table('sach')
+                ->where('id', $item->sach_id)
+                ->increment('da_ban', $item->so_luong);
+        }
     }
+
+    // cập nhật trạng thái đơn
+    $order->update([
+        'trang_thai' => $request->trang_thai
+    ]);
+
+    return back()->with('success', 'Cập nhật đơn hàng thành công!');
+}
 }
