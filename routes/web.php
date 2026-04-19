@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AccountController; 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\SachController4;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DonHangController;
@@ -12,6 +13,16 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/index', function () {
     return view('sach.index');
 })->middleware(['auth', 'verified'])->name('index');
+
+Route::get('/chitiet/{id}', [BookController::class, 'chitietsach'])->name('sach.details');
+Route::post('/them-gio-hang', [BookController::class, 'cartadd'])->name('cartadd');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/giohang', [BookController::class, 'order'])->name('order');
+    Route::post('/cart/delete', [BookController::class, 'cartdelete'])->name('cartdelete');
+    Route::post('/order/create', [BookController::class, 'ordercreate'])->name('ordercreate');
+    Route::post('/sach/danhgia', [BookController::class, 'danhgia'])->name('book.rate');
+    
+});
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/index', function () {
@@ -43,7 +54,6 @@ require __DIR__.'/auth.php';
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/sach/theloai/{id}', [HomeController::class, 'theLoai']);
 Route::get('/timkiem', [HomeController::class, 'search']);
-require __DIR__.'/auth.php';
 
 
 
@@ -86,7 +96,7 @@ Route::prefix('admin')->group(function () {
     // Quản lý Đơn hàng: http://127.0.0.1:8000/admin/donhang
     Route::get('/donhang', [DonHangController::class, 'index'])->name('admin.donhang.index');
     Route::post('/donhang/update/{id}', [DonHangController::class, 'update'])->name('admin.donhang.update');
-});
+
 use App\Http\Controllers\DashboardController;
 
 Route::get('/admin/index', [App\Http\Controllers\DashboardController::class, 'index'])
