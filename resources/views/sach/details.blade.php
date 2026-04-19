@@ -12,7 +12,7 @@
     @endif
     <div class="row">
         <div class="col-md-5">
-            <img src="{{ asset('hinh/image/'.$sach->hinh_anh) }}" width="100%" class="img-thumbnail">
+            <img src="{{ asset('storage/image/'.$sach->hinh_anh) }}" width="100%" class="img-thumbnail">
         </div>
         <div class="col-md-7">
             <h3>{{ $sach->ten_sach }}</h3>
@@ -46,7 +46,7 @@
             <div class="mb-3 p-2 bg-light rounded">
                 <span class="text-primary font-weight-bold">{{ $rev->name }}</span> 
                 <span class="text-warning ml-2">{{ str_repeat('⭐', $rev->diem) }}</span>
-                <p class="mb-0 italic">"{{ $rev->noi_dung }}"</p>
+                <p class="mb-0 italic">{{ $rev->noi_dung }}</p>
                 <small class="text-muted">{{ $rev->created_at }}</small>
             </div>
         @empty
@@ -61,15 +61,16 @@
                     <input type="hidden" name="sach_id" value="{{ $sach->id }}">
                     <div class="form-group">
                         <label>Số sao:</label>
-                        <select name="so_sao" class="form-control" style="width: 120px;">
+                        <select name="diem" class="form-control" style="width: 120px;">
                             <option value="5">5 Sao (Tuyệt vời)</option>
                             <option value="4">4 Sao (Tốt)</option>
                             <option value="3">3 Sao (Tạm được)</option>
                         </select>
                     </div>
+
                     <div class="form-group">
                         <label>Nội dung nhận xét:</label>
-                        <textarea name="nhan_xet" class="form-control" rows="3" required></textarea>
+                        <textarea name="noi_dung" class="form-control" rows="3" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
                 </form>

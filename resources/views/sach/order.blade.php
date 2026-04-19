@@ -56,6 +56,20 @@
             <h4 class="text-center mb-3">Thông tin đặt hàng</h4>
             <form action="{{ route('ordercreate') }}" method="POST">
                 @csrf
+                <div class="form-group mb-2">
+                    <label>Tên người nhận</label>
+                    <input type="text" name="ten_nguoi_nhan" class="form-control" required>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label>Số điện thoại</label>
+                    <input type="text" name="so_dien_thoai" class="form-control" required>
+                </div>
+
+                <div class="form-group mb-2">
+                    <label>Địa chỉ giao hàng</label>
+                    <input type="text" name="dia_chi_giao" class="form-control" required>
+                </div>
                 <div class="form-group">
                     <label>Hình thức thanh toán</label>
                     <select name="hinh_thuc_thanh_toan" class="form-control">

@@ -10,6 +10,9 @@
                     <a href="{{ route('account.orders') }}" class="float-right text-white text-decoration-none" style="float: right;">← Quay lại</a>
                 </div>
                 <div class="card-body">
+                    <p><strong>Người nhận:</strong> {{ $order->ten_nguoi_nhan }}</p>
+                    <p><strong>SĐT:</strong> {{ $order->so_dien_thoai }}</p>
+                    <p><strong>Địa chỉ:</strong> {{ $order->dia_chi_giao }}</p>
                     <p><strong>Ngày đặt:</strong> {{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i') }}</p>
                     <p><strong>Trạng thái:</strong> {{ $order->trang_thai }}</p>
                     <p><strong>Phương thức thanh toán:</strong> {{ strtoupper($order->thanh_toan) }}</p>
@@ -29,7 +32,7 @@
                             <tr>
                                 <td>
                                     @if($item->sach && $item->sach->hinh_anh)
-                                        <img src="{{ asset('images/' . $item->sach->hinh_anh) }}" alt="" width="50">
+                                        <img src="{{ asset('storage/image/' . $item->sach->hinh_anh) }}" alt="" width="50">
                                     @endif
                                 </td>
                                 <td>{{ $item->sach ? $item->sach->ten_sach : 'Sách không tồn tại' }}</td>
@@ -46,6 +49,15 @@
                             </tr>
                         </tfoot>
                     </table>
+                        @if($order->trang_thai == 'cho_xac_nhan')
+                            <form action="{{ route('account.order_cancel', $order->id) }}" method="POST">
+                                @csrf
+                                <button class="btn btn-danger mt-3"
+                                    onclick="return confirm('Bạn chắc chắn muốn hủy đơn?')">
+                                    Hủy đơn hàng
+                                </button>
+                            </form>
+                        @endif
                 </div>
             </div>
         </div>

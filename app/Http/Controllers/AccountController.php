@@ -82,4 +82,22 @@ class AccountController extends Controller
         
         return view('account.order_detail', compact('order', 'details'));
     }
+    public function cancelOrder($id)
+{
+    $order = DonHang::where('id', $id)
+        ->where('user_id', Auth::id())
+        ->firstOrFail();
+
+    // ❌ Không cho hủy nếu không phải "chờ xác nhận"
+    if ($order->trang_thai !== 'cho_xac_nhan') {
+        return back()->with('error', 'Chỉ được hủy đơn khi đang chờ xác nhận!');
+    }
+
+    // ✅ cập nhật trạng thái
+    $order->update([
+        'trang_thai' => 'da_huy'
+    ]);
+
+    return back()->with('success', 'Đã hủy đơn hàng thành công!');
+}
 }

@@ -40,9 +40,21 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ route('account.order_detail', $order->id) }}" class="btn btn-sm btn-info shadow-sm">
-                                            <i class="fas fa-eye"></i> Xem
+
+                                        <a href="{{ route('account.order_detail', $order->id) }}" class="btn btn-sm btn-info">
+                                            Xem
                                         </a>
+
+                                        @if($order->trang_thai == 'cho_xac_nhan')
+                                            <form action="{{ route('account.order_cancel', $order->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                <button class="btn btn-sm btn-danger"
+                                                    onclick="return confirm('Bạn có chắc muốn hủy đơn này?')">
+                                                    Hủy
+                                                </button>
+                                            </form>
+                                        @endif
+
                                     </td>
                                 </tr>
                                 @endforeach

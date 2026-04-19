@@ -14,7 +14,7 @@ Route::get('/index', function () {
     return view('sach.index');
 })->middleware(['auth', 'verified'])->name('index');
 
-Route::get('/chitiet/{id}', [BookController::class, 'chitietsach'])->name('sach.details');
+Route::get('/chitietsach/{id}', [BookController::class, 'chitietsach'])->name('sach.details');
 Route::post('/them-gio-hang', [BookController::class, 'cartadd'])->name('cartadd');
 Route::middleware(['auth'])->group(function () {
     Route::get('/giohang', [BookController::class, 'order'])->name('order');
@@ -57,7 +57,7 @@ Route::get('/timkiem', [HomeController::class, 'search']);
 
 
 
-Route::prefix('admin')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     
     // --- THÊM SÁCH ---
     Route::get('/themsach', [SachController4::class, 'trangThemSach'])->name('admin.themsach');
@@ -87,24 +87,28 @@ Route::prefix('admin')->group(function () {
     
     // Xóa (mềm) thể loại
     Route::get('/theloai/delete/{id}', [SachController4::class, 'xoaTheLoai'])->name('admin.theloai.delete');
-
-});
     // Quản lý User: http://127.0.0.1:8000/admin/user
     Route::get('/user', [UserController::class, 'index'])->name('sys.user.index');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('sys.user.revoke');
 
     // Quản lý Đơn hàng: http://127.0.0.1:8000/admin/donhang
     Route::get('/donhang', [DonHangController::class, 'index'])->name('admin.donhang.index');
-    Route::post('/donhang/update/{id}', [DonHangController::class, 'update'])->name('admin.donhang.update');
+    Route::put('/donhang/{id}', [DonHangController::class, 'update'])->name('admin.donhang.update');
+
+});
+    
 
 use App\Http\Controllers\DashboardController;
 
-Route::get('/admin/index', [App\Http\Controllers\DashboardController::class, 'index'])
+Route::get('/admin/index', [DashboardController::class, 'index'])
     ->name('admin.index')
-    ->middleware(['web', 'auth']); 
+    ->middleware(['auth', 'admin']);
 use App\Http\Controllers\DanhGiaController;
 
 Route::get('/admin/danhgia', [DanhGiaController::class, 'index'])->name('admin.danhgia.index');
 Route::get('/admin/danhgia/{id}/duyet', [DanhGiaController::class, 'duyet'])->name('admin.danhgia.duyet');
 Route::get('/admin/danhgia/{id}/tu-choi', [DanhGiaController::class, 'tuchoi'])->name('admin.danhgia.tuchoi');
 Route::get('/admin/danhgia/{id}/xoa', [DanhGiaController::class, 'xoa'])->name('admin.danhgia.xoa');
+
+Route::post('/account/order/cancel/{id}', [AccountController::class, 'cancelOrder'])
+    ->name('account.order_cancel');
